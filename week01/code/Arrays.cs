@@ -8,12 +8,15 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return []; // replace this return statement with your own
+        // To perform this function, we first create a list to store the results of the multiples of the requested number.
+        List<double> results = new();
+        // Next, we create a for loop to generate the list of options for the required number of multiples, limiting the total to the value specified in `length`.
+        for (int i = 1; i <= length; ++i) {
+            //Finally, we need to calculate the result of the multiples by multiplying `number` by the loop results, and then add that to the list we created to store the answer.
+            results.Add(number * i);
+            }
+        //Finally, the list is returned, and `.ToArray()` is added to convert our list into a `double[]`.
+        return results.ToArray();
     }
 
     /// <summary>
@@ -25,9 +28,22 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        //To begin, we create a conditional check to handle cases where the list is empty,
+        //thereby avoiding errors; we also implement a division operation to prevent incorrect full loops through the list and avoid an overflow.
+        if(data.Count == 0) return;
+        amount = amount % data.Count;
+        //Next, we create a new temporary list to hold our data, and we calculate the index positions that need to be shifted within the list by 
+        //performing a subtraction.
+        List<int> dataList = new();
+        int p = data.Count-amount;
+        //First, we specify the range to place at the beginning of our list—specifically, the numbers from the break point to the end.
+        List<int> f = data.GetRange(p, amount);
+        dataList.AddRange(f);
+        //...to then arrange the numbers from the beginning up to the break point, and organize it that way.
+        List<int> s = data.GetRange(0, p);
+        dataList.AddRange(s);
+        //Finally, since our function is a `void` type, we cannot return the `dataList`; instead, we clear the `data` so we can add the data from our `dataList` to it.
+        data.Clear();
+        data.AddRange(dataList);
     }
 }
