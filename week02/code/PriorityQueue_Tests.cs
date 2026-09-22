@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // TODO Problem 2 - Write and run test cases and fix the code to match requirements.
@@ -7,8 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
+    // Scenario: We check whether the code performs enqueue and dequeue operations according to the correct priority order.
+    // Expected Result: sue, bob, tim
     // Defect(s) Found: 
     public void TestPriorityQueue_1()
     {
@@ -34,8 +33,8 @@ public class PriorityQueueTests
     }
 
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
+    // Scenario: We verify whether the code respects priority when two people have the same priority level, and check if it respects the order in which they were added.
+    // Expected Result: tim, sue, bob
     // Defect(s) Found: 
     public void TestPriorityQueue_2()
     {
@@ -61,13 +60,12 @@ public class PriorityQueueTests
     }
 
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
+    // Scenario: Confirm the error sent when the list is empty.
+    // Expected Result: The queue is empty.
     // Defect(s) Found: 
 
     public void TestPriorityQueue_3()
     {   
-        Debug.WriteLine("ESTOY EJECUTANDO MI TEST NUEVO");
         var priorityQueue = new PriorityQueue();
 
         try
