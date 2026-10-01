@@ -137,6 +137,8 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Remove(int value)
     {   
+        // Search for the node that matches 'value' by starting at the 
+        // head of the list.
         Node? curr = _head;
         while (curr is not null)
         {
@@ -148,6 +150,8 @@ public class LinkedList : IEnumerable<int>
                 {
                     RemoveTail();
                 }
+                // If the location of 'value' is at the beginning of the list,
+                // then we can call remove_head to delete 'value'
                 else if (curr == _head)
                 {
                     RemoveHead();
@@ -157,7 +161,7 @@ public class LinkedList : IEnumerable<int>
                 else
                 {
                     curr.Next!.Prev = curr.Prev; // Connect node after 'value' to the new node
-                    curr.Prev!.Next = curr.Next;
+                    curr.Prev!.Next = curr.Next; // Connect node before 'value' to the new node
                 }
 
                 return; // We can exit the function after we insert
