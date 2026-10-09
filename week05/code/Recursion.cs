@@ -14,8 +14,15 @@ public static class Recursion
     /// </summary>
     public static int SumSquaresRecursive(int n)
     {
-        // TODO Start Problem 1
-        return 0;
+        if (n <= 0)
+        {
+            return 0;
+        }
+
+        else
+        {
+            return (n * n + SumSquaresRecursive(n - 1));
+        }
     }
 
     /// <summary>
@@ -39,7 +46,21 @@ public static class Recursion
     /// </summary>
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
-        // TODO Start Problem 2
+        
+    if (word.Length == size)
+    {
+        results.Add(word);
+    }
+    else
+    {
+        for (var i = 0; i < letters.Length; i++)
+        {
+
+            var lettersLeft = letters.Remove(i, 1);
+            PermutationsChoose(results, lettersLeft,size, word + letters[i]);
+            Console.WriteLine(results);
+        }
+    }
     }
 
     /// <summary>
@@ -86,6 +107,9 @@ public static class Recursion
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
+        if (remember == null)
+        remember = new Dictionary<int, decimal>();
+
         // Base Cases
         if (s == 0)
             return 0;
@@ -96,10 +120,12 @@ public static class Recursion
         if (s == 3)
             return 4;
 
-        // TODO Start Problem 3
+        if (remember.ContainsKey(s))
+            return remember[s];
 
         // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+        remember[s] = ways;
         return ways;
     }
 
@@ -118,7 +144,18 @@ public static class Recursion
     /// </summary>
     public static void WildcardBinary(string pattern, List<string> results)
     {
-        // TODO Start Problem 4
+        int position = pattern.IndexOf('*');
+        if (position == -1)
+        {
+            results.Add(pattern);
+        }
+        else
+        {
+                var pattern0 = pattern[..position] + '0' + pattern[(position + 1)..];
+                var pattern1 = pattern[..position] + '1' + pattern[(position + 1)..];
+                WildcardBinary(pattern0, results);
+                WildcardBinary(pattern1, results);
+        }
     }
 
     /// <summary>
@@ -131,13 +168,46 @@ public static class Recursion
         // to initialize the currPath list.
         if (currPath == null) {
             currPath = new List<ValueTuple<int, int>>();
+            currPath.Add((0,0));
         }
         
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
-        // TODO Start Problem 5
-        // ADD CODE HERE
+        if (maze.IsEnd(x, y) == true)
+        {
+            results.Add(currPath.AsString());
+        }
 
-        // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+        else
+        {
+            var left = (x - 1, y);
+            var right = (x + 1, y);
+            var up = (x, y - 1);
+            var down = (x, y + 1);
+            if (maze.IsValidMove(currPath,left.Item1, left.Item2) == true)
+            {   
+                currPath.Add((left));
+                SolveMaze(results, maze, left.Item1,left.Item2, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
+            if (maze.IsValidMove(currPath, right.Item1, right.Item2) == true)
+            {   
+                currPath.Add((right));
+                SolveMaze(results, maze, right.Item1,right.Item2, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
+            if (maze.IsValidMove(currPath, up.Item1, up.Item2) == true)
+            {   
+                currPath.Add((up));
+                SolveMaze(results, maze, up.Item1,up.Item2, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
+            if (maze.IsValidMove(currPath, down.Item1, down.Item2) == true)
+            {   
+                currPath.Add((down));
+                SolveMaze(results, maze, down.Item1,down.Item2, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
+        }
     }
 }
